@@ -63,6 +63,13 @@ public class Window {
     public void run() {
         init();
         loop();
+
+        glfwFreeCallbacks(glfwWindow);
+        glfwDestroyWindow(glfwWindow);
+
+        glfwTerminate();
+        var x = glfwSetErrorCallback(null);
+        if (x != null) x.free();
     }
 
     /**
@@ -86,6 +93,10 @@ public class Window {
         if (glfwWindow == NULL) {
             throw new IllegalStateException("S'e' rotto tutto xd");
         }
+
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
 
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);
