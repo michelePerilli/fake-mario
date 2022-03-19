@@ -1,5 +1,6 @@
 package listener;
 
+import configuration.BaseClass;
 import it.pixel.vectors.Vector2f;
 
 import java.util.ArrayList;
@@ -15,9 +16,8 @@ import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
  * File: MouseListener
  * Creation: 19/03/2022
  */
-public class MouseListener {
+public class MouseListener extends BaseClass {
 
-    private static final Logger LOG = Logger.getLogger("[Mouse Listener]");
 
     /**
      * The constant instance.
@@ -80,7 +80,6 @@ public class MouseListener {
         get().lastPos = new Vector2f(get().pos.x(), get().pos.y());
         get().pos = new Vector2f((float) x, (float) y);
         get().isDragging = new ArrayList<>(List.of(get().mouseButtonPressed)).contains(Boolean.TRUE);
-//        LOG.info("mousePosCallback: " + x + " " + y + "\n");
     }
 
     /**
@@ -100,7 +99,7 @@ public class MouseListener {
                 get().isDragging = false;
             }
         }
-        LOG.info("mouseButtonCallback: " + button + " " + action + "\n");
+        info("mouseButtonCallback: " + button + " " + action);
 
     }
 
@@ -113,7 +112,7 @@ public class MouseListener {
      */
     public static void mouseScrollCallback(long window, double x, double y) {
         get().scroll = new Vector2f((float) x, (float) y);
-        LOG.info("mouseScrollCallback: " + x + " " + y + "\n");
+        info("mouseScrollCallback: " + x + " " + y);
 
     }
 

@@ -1,6 +1,8 @@
 package jade;
 
+import configuration.BaseClass;
 import configuration.Constants;
+import listener.KeyListener;
 import listener.MouseListener;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -16,7 +18,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
  * File: Windows
  * Creation: 19/03/2022
  */
-public class Window {
+public class Window extends BaseClass {
 
     /**
      * The Width.
@@ -85,7 +87,6 @@ public class Window {
             throw new IllegalStateException("S'e' rotto tutto");
         }
 
-
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -99,6 +100,8 @@ public class Window {
         glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
         glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
 
         glfwMakeContextCurrent(glfwWindow);
         glfwSwapInterval(1);
@@ -116,6 +119,11 @@ public class Window {
             glfwPollEvents();
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+
+
+            if (KeyListener.isKeyPressed(GLFW_KEY_SPACE)) {
+                info("spazio");
+            }
 
             glfwSwapBuffers(glfwWindow);
         }
